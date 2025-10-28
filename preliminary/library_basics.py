@@ -15,6 +15,7 @@ from PIL import Image
 from pathlib import Path
 import cv2
 import numpy as np
+import pytesseract
 
 VID_PATH = Path("../resources/oop.mp4")
 OUT_PATH = Path("../resources")
@@ -74,7 +75,7 @@ class CodingVideo:
             raise ValueError("Failed to encode frame")
         return buf.tobytes()
 
-    def save_as_image(self, seconds: int, output_path: Path | str = 'output.png') -> None:
+    def save_as_image(self, seconds: int, output_path: Path | str = 'output.png') -> Image:
         """Saves the given frame as a png image"""
         if type(output_path) is str:
             output_path = OUT_PATH / output_path
@@ -83,12 +84,18 @@ class CodingVideo:
         frame = self.get_frame_rgb_array(frame)
         image = Image.fromarray(frame)
         image.save(output_path)
+        return image
+
+    def get_text_of_image(self, image: Image) -> str:
+        """Currently not working"""
+        return pytesseract.image_to_string(image)
 
 def test():
     """Try out your class here"""
     oop = CodingVideo(VID_PATH)
     print(oop)
-    oop.save_as_image(42)
+    image = oop.save_as_image(42)
+    #print(oop.get_text_of_image(image))
 
 
 if __name__ == '__main__':
