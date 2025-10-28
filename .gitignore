@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+#Video
+resources/*
+resources/oop.mp4
