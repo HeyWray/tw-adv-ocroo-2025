@@ -28,7 +28,7 @@ Complete the steps below and fill in the `> block` sections
 ### Installing and running OpenCV
 
 1. Examine the `pyproject.toml` what dependencies does it currently identify?
->
+>None
 >
 2. Create a `.venv` in this folder using `uv venv`
 3. Activate the `venv` as instructed by `uv`
@@ -36,20 +36,20 @@ Complete the steps below and fill in the `> block` sections
   - What role does OpenCV have in this project?
   >
   - What is the `uv pip` command to install OpenCV?
-  > `uv pip install ????`
+  > `uv pip install opencv-python`
   - What is the URL of this library's git repo?
-  > [Insert URL Here](https://github.com/opencv/????-?????)
+  > https://github.com/HeyWray/tw-adv-ocroo-2025)
 5. Add OpenCV to your project using the `uv add` command:
   > `uv add name-of-open-cv-library
 
 6. Have the dependencies in the `pyproject.toml` changed? If so, how?
-  >
+  >opencv-python has been added
   >
 7. Why did we use `uv add` over `uv pip`?
-  >
+  >uv pip adds the package to the .venv. uv add, does that and adds it to the dependecy.
   >
 8. The `numpy` library is required for OpenCV. Should you add an explicit requirement for it? Why/Why not?
-  >
+  >No. While numpy is needed it is not pertinent to the importance of the project. Would we add in the dependency we need electricity and a computer?
   >
 9. Commit the changes so far to git. Use the message `chore: add OpenCV dependency`
 10. Go to `preliminary/library_basics.py` and complete the required functionality.
