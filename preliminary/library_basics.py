@@ -18,7 +18,7 @@ import numpy as np
 
 VID_PATH = Path("../resources/oop.mp4")
 OUT_PATH = Path("../resources")
-
+tesseract_cmd_path = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
 
 class CodingVideo:
     capture: cv2.VideoCapture
