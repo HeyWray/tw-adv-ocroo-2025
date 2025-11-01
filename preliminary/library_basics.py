@@ -10,12 +10,14 @@ Some docstrings **require** you to add references to third-party documentation.
 
 Make sure you read the docstrings C.A.R.E.F.U.L.Y (yes, I took the L to check that you are awake!)
 """
+import random
 
 from PIL import Image
 from pathlib import Path
 import cv2
 import numpy as np
 import pytesseract
+import os
 
 VID_PATH = Path("../resources/oop.mp4")
 OUT_PATH = Path("../resources")
@@ -75,15 +77,24 @@ class CodingVideo:
             raise ValueError("Failed to encode frame")
         return buf.tobytes()
 
-    def save_as_image(self, seconds: int, output_path: Path | str = 'output.png') -> Image:
+    def save_as_image(self, seconds: int, output_path: Path | str = 'output') -> Image:
         """Saves the given frame as a png image"""
-        if type(output_path) is str:
-            output_path = OUT_PATH / output_path
+        print(f"start after: {output_path}")
+        saveas : Path
+        output_path = str(output_path)
+        saveas = OUT_PATH / Path(output_path + ".png")
+        print(f"before after: {saveas}")
 
         frame = self.get_frame_number_at_time(seconds)
         frame = self.get_frame_rgb_array(frame)
         image = Image.fromarray(frame)
-        image.save(output_path)
+
+        duplicate = 0
+        while os.path.exists(saveas):
+            duplicate += 1
+            saveas = OUT_PATH / Path(output_path + str(duplicate) + ".png")
+        print(f"path after: {saveas}")
+        image.save(saveas)
         return image
 
     def get_text_of_image(self, image: Image) -> str:
