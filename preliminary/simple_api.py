@@ -28,6 +28,12 @@ class VideoMetaData(BaseModel):
     duration_seconds: float
     _links: dict | None = None
 
+@app.get("/resources")
+def testing_api():
+    coding_vid = CodingVideo("../resources/oop.mp4")
+    image = coding_vid.save_as_image(6)
+    return
+
 @app.get("/video")
 def list_videos():
     """List all available videos with HATEOAS-style links."""
