@@ -32,7 +32,7 @@ class VideoMetaData(BaseModel):
 def testing_api():
     coding_vid = CodingVideo("../resources/oop.mp4")
     image = coding_vid.save_as_image(6)
-    return
+    return image
 
 @app.get("/video")
 def list_videos():
