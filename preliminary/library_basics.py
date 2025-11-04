@@ -21,7 +21,8 @@ import os
 
 VID_PATH = Path("../resources/oop.mp4")
 OUT_PATH = Path("../resources")
-tesseract_cmd_path = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
+tesseract_cmd_path_mac = "/opt/homebrew/Cellar/tesseract/5.5.1/bin/tesseract"
+tesseract_cmd_path_win = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
 
 class CodingVideo:
     capture: cv2.VideoCapture
@@ -29,7 +30,7 @@ class CodingVideo:
     def __init__(self, video: Path | str):
         self.capture = cv2.VideoCapture(video)
         if not self.capture.isOpened():
-            raise ValueError(f"Cannot open {video}")
+            raise ValueError(f"Cannot open {video}\n came out as {self.capture}")
 
         self.fps = self.capture.get(cv2.CAP_PROP_FPS)
         self.frame_count = int(self.capture.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -81,6 +82,7 @@ class CodingVideo:
         """Saves the given frame as a png image"""
         saveas : Path
         output_path = str(output_path)
+        output_path.removeprefix(".mp4")
         saveas = OUT_PATH / Path(output_path + ".png")
 
         frame = self.get_frame_number_at_time(seconds)
@@ -106,7 +108,8 @@ def _test():
     oop = CodingVideo(VID_PATH)
     print(oop)
     image = oop.save_as_image(42)
-    #print(oop.get_text_of_image(image))
+    #oop.get_text_of_image(image)
+    print(oop.get_text_of_image(image))
 
 if __name__ == '__main__':
     _test()

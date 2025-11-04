@@ -60,6 +60,9 @@ Complete the steps below and fill in the `> block` sections
 
 [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) provides optical character recognition (OCR) functionality needed for the project.
 
+Download Tesseract (mac)
+> brew install tesseract
+
 Tesseract consists of both an OCR Engine and a command line program. It is predominantly written in C++.
 
 1. Examine the [Readme](https://github.com/tesseract-ocr/tesseract?tab=readme-ov-file) and find a list of Python wrappers.

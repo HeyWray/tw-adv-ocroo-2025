@@ -28,11 +28,12 @@ class VideoMetaData(BaseModel):
     duration_seconds: float
     _links: dict | None = None
 
-@app.get("/resources")
-def testing_api():
-    coding_vid = CodingVideo("../resources/oop.mp4")
-    image = coding_vid.save_as_image(6)
-    return image
+@app.get("/test")
+def test(video_path: str, frame_in_seconds: int):
+    coding_vid = CodingVideo(Path(video_path))
+    image = coding_vid.save_as_image(frame_in_seconds, Path(video_path))
+    return {coding_vid.get_text_of_image(image)
+            .replace("\n", " \n ")}
 
 @app.get("/video")
 def list_videos():
