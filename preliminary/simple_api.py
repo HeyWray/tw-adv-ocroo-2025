@@ -7,6 +7,7 @@ Requirements
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Response
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from pathlib import Path
 from library_basics import CodingVideo
@@ -19,7 +20,7 @@ app = FastAPI()
 # You can add uploads later (not required for assessment)
 # For now, we will just hardcode are samples
 VIDEOS: dict[str, Path] = {
-    "demo": Path("../resources/oop.mp4")
+    "demo": Path("./resources/oop.mp4")
 }
 
 class VideoMetaData(BaseModel):
@@ -28,12 +29,9 @@ class VideoMetaData(BaseModel):
     duration_seconds: float
     _links: dict | None = None
 
-@app.get("/test")
-def test(video_path: str, frame_in_seconds: int):
-    coding_vid = CodingVideo(Path(video_path))
-    image = coding_vid.save_as_image(frame_in_seconds, Path(video_path))
-    return {coding_vid.get_text_of_image(image)
-            .replace("\n", " \n ")}
+@app.get("/")
+def home():
+    return FileResponse("pages/home.html")
 
 @app.get("/video")
 def list_videos():
@@ -92,4 +90,10 @@ def video_frame(vid: str, t: float):
     finally:
       video.capture.release()
 
-# TODO: add enpoint to get ocr e.g. /video/{vid}/frame/{t}/ocr
+
+@app.get("/video/{vid}/frame/{t}/ocr")
+def video_frame_ocr(vid: str, t: int):
+    coding_vid = CodingVideo(VIDEOS[vid])
+    image = coding_vid.save_as_image(t, VIDEOS[vid])
+    return {coding_vid.get_text_of_image(image)
+            .replace("\n", " \n ")}

@@ -99,7 +99,7 @@ FastAPI will allow us to enable communication with our OCR service from other pr
 2. Commit the new dependency `chore: add FastAPI dependency`
 3. Run in development mode using:
 `uv run fastapi dev preliminary/simple_api.py`
-4. Run the following curl command (may require git bash on Windows):
+4. Run the following curl command:
 `curl 127.0.0.1:8000/video`
 5. Confirm that a list of videos and URLs is returned by copying the output below:
 > Description
@@ -117,9 +117,19 @@ FastAPI will allow us to enable communication with our OCR service from other pr
   ]
 }
 6. What are the names of the two processes that just communicated?
->
-6. Modify the simple_api.py so that it works correctly with your implementation and complete any TODO markers
-7. Demonstrate the use of at least two other end points below:
->
->
->
+> Curl & FastAPI
+
+7. Modify the simple_api.py so that it works correctly with your implementation and complete any TODO markers
+
+
+8. Demonstrate the use of at least two other end points below:
+
+First one is "video_frame_ocr"
+>curl 127.0.0.1:8000/video/demo/frame/42/ocr
+> 
+>["I finally saw The Matrix today. \n It was the best documentary \n I've ever seen. \n  \n "]%     
+
+Second is "video"
+>curl 127.0.0.1:8000/video/demo  
+> 
+>{"fps":23.976023976023978,"frame_count":15152,"duration_seconds":631.9646666666666}%        

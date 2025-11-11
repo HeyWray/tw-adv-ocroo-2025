@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block page_title %}
+    <i class="fa-solid fa-hand fa-shake text-gray-800 pr-4"
+    style="--fa-animation-duration: 5s; --fa-animation-iteration-count: 5; --fa-animation-timing: ease-in-out"></i>
+    Welcome to... APP NAME
+{% endblock %}
+
+<!-- Footer of Page -->
+{% block base_footer %}
+<p class="text-gray-500 text-left px-2 font-medium uppercase title-font mb-4 border-b border-gray-500 w-full">
+    Home Page
+</p>
+{% endblock %}
+
+{% block main %}
+<section class="container mx-auto border grow h-full shadow-md p-4 rounded space-y-2">
+    <h2 class="bg-gray-500 text-gray-100 p-4 mb-4 -mx-4 -mt-4 rounded-t">Home Page</h2>
+    <p>MAIN CONTENT</p>
+
+    <ul class="list-disc list-inside">
+        <li>List Item</li>
+        <li>List Item</li>
+        <li>List Item</li>
+        <li>List Item</li>
+        <li>List Item</li>
+    </ul>
+
+</section>
+
+ <video width="640" controls>
+  <source src="../resources/oop.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+{% endblock %}
