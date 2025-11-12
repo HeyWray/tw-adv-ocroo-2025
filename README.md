@@ -11,7 +11,16 @@ It uses OpenCV-Python for video preperation, Pillow for creating images, Tessera
 ### [Tesseract](https://tesseract-ocr.github.io/tessdoc/Compiling.html#windows)
 
 Install for Windows
-> git clone https://github.com/tesseract-ocr/tesseract tesseract
+
+There are several steps to this
+
+1. Install [tesseract-ocr-w64-setup-5.5.0.20241111.exe](https://github.com/UB-Mannheim/tesseract/wiki)
+2. During the installation process you will get a path file of where tesseract is downloading. e.g. `C:\Users\You\...\Tesseract-OCR...` Keep this on hand for later.
+3. Continue with the 'Installation' step and come back to this point when asked.
+4. Open `.venv/lib/python3.13/site-packages/pytesseract/pytesseract.py` (or equivalent)
+5. Around line 32, change `tesseract_cmd` to be the file path to the tesseract.
+6. Note, you need to make sure all `\` are converted to `/`
+7. Be sure to add `/tesseract.exe` to the file path so we target tesseract's .exe specifically
 
 Install for Mac
 > brew install tesseract
@@ -41,27 +50,51 @@ Install for Mac/Linux
 6. Install dependencies through uv 
 > uv pip install -r pyproject.toml
 7. Split your terminal or open another tab. Make sure you are in tw-adv-ocroo-2025.
+8. If you are using windows please return back to the Tesseract download.
 
 
-
-## How to Use
-
-#### Running FastAPI
+## Running FastAPI
 > uv run fastapi dev preliminary/simple_api.py 
 
 You can now open https://127.0.0.1:8000/docs for a list of methods to use
 
 The first method /test provides a starting point
 
-#### Pass variables
-- Input the full computer path to the video oop.mp4 located in the resources folder
-- Input the time of the frame you would like to access in seconds (e.g. 1m30s would be 90)
+
+## How to Use
+You can either go into https://127.0.0.1:8000/docs or type in your CLI.
+
+#### In browser 
+Go into https://127.0.0.1:8000/docs
+
+Press the blue bar `/video/{vid}/frame/{t}/ocr`
+
+Press the button on the right 'Try it out'
+Pass in the following for each variable
+
+vid = `demo`
+
+t = `42`
+
+You will now see a response in the body along the lines of ["I finally saw The Matrix today..."]
 
 
-You will now have:
-- The text of the frame, outputted as a return string
-- A .png screenshot saved of the frame (located in the resources' folder)
+#### In CLI
+Type the following 
 
+> curl -X 'GET' \
+> 
+> 'http://127.0.0.1:8000/video/demo/frame/42/ocr' \ 
+> 
+> -H 'accept: application/json'
+
+
+## What is happening?
+We are grabbing a frame from the video in `resources/oop.mp4` and seeing what text is on screen from the given time.
+
+You can change the variable `t` to be any time in seconds and get a variety of text.
+
+NOTE you will also get images from the video located in `resources/`
 
 ## Known Bugs
 
