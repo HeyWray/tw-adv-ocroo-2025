@@ -1,250 +1,63 @@
 
-{% extends "base.html" %}
+<!--{% extends "base.html" %}-->
 
-{% block title %} Home {% endblock title %}
+<!--{% block title %} Home {% endblock title %}-->
 
-{% block page_title %}
-    <i class="fa-solid fa-hand fa-shake text-gray-800 pr-4"
-    style="--fa-animation-duration: 5s; --fa-animation-iteration-count: 5; --fa-animation-timing: ease-in-out"></i>
-    Welcome to... APP NAME
-{% endblock %}
+<!--{% block page_title %}-->
+<!--    <i class="fa-solid fa-hand fa-shake text-gray-800 pr-4"-->
+<!--    style="&#45;&#45;fa-animation-duration: 5s; &#45;&#45;fa-animation-iteration-count: 5; &#45;&#45;fa-animation-timing: ease-in-out"></i>-->
+<!--{% endblock %}-->
 
-<!-- Footer of Page -->
-{% block base_footer %}
-<p class="text-gray-500 text-left px-2 font-medium uppercase title-font mb-4 border-b border-gray-500 w-full">
-    Home Page
-</p>
-{% endblock %}
+<style>
+    .video {
+        float: left;
+        width: 60%;
+    }
 
-{% block main %}
-<section class="container mx-auto border grow h-full shadow-md p-4 rounded space-y-2">
-    <h2 class="bg-gray-500 text-gray-100 p-4 mb-4 -mx-4 -mt-4 rounded-t">Home Page</h2>
-    <p>MAIN CONTENT</p>
+    .text-output {
+        float: right;
+        width: 35%;
+        height: 80%;
+    }
 
-    <ul class="list-disc list-inside">
-        <li>List Item</li>
-        <li>List Item</li>
-        <li>List Item</li>
-        <li>List Item</li>
-        <li>List Item</li>
-    </ul>
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .button{
+        float: right;
+        width: 10%;
+        height: 80%;
+    }
+</style>
 
-</section>
+<div style="padding-left:50; padding-right:50; padding-top:10;">
 
- <video width="640" controls>
-  <source src="../resources/oop.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-{% endblock %}
+    <div class="row">
+        <h2 style="text-align: left; float:left; width:50%;">
+            Welcome to Video Player - Home Page</h2>
+        <div style="width:50%;">
+            <button style="button">1</button>
+            <button style="button">2</button>
+            <button style="button">3</button>
+        </div>
+    </div>
 
+    <div class="row">
+        <video class="video" width="800" controls>
+             <source src="http://localhost:8000/video_file_response/{demo}" type="video/mp4">
+        </video>
+        <textarea class="text-output">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+            sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </textarea>
+    </div>
 
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Coding Page Layout</title>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            font-family: Arial, sans-serif;-->
-<!--            background-color: #f0f0f0;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            min-height: 100vh;-->
-<!--            margin: 0;-->
-<!--        }-->
-
-<!--        .container {-->
-<!--            width: 900px; /* Adjust as needed */-->
-<!--            background-color: white;-->
-<!--            padding: 20px;-->
-<!--            border-radius: 12px;-->
-<!--            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);-->
-<!--        }-->
-
-<!--        .header {-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        .title {-->
-<!--            font-size: 1.5em;-->
-<!--            font-weight: bold;-->
-<!--            color: #333;-->
-<!--        }-->
-
-<!--        .buttons {-->
-<!--            display: flex;-->
-<!--            gap: 10px;-->
-<!--        }-->
-
-<!--        .button {-->
-<!--            width: 40px;-->
-<!--            height: 40px;-->
-<!--            border-radius: 8px;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            color: white;-->
-<!--            font-size: 1.2em;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        .button.green { background-color: #8BC34A; }-->
-<!--        .button.red { background-color: #E9967A; }-->
-<!--        .button.blue { background-color: #9370DB; }-->
-
-<!--        /* Using a simple 'house', 'T', and 'image' icon representation */-->
-<!--        .button.green::after { content: '🏠'; }-->
-<!--        .button.red::after { content: 'T'; font-weight: bold; }-->
-<!--        .button.blue::after { content: '🖼️'; }-->
-
-<!--        .content-area {-->
-<!--            display: flex;-->
-<!--            gap: 20px;-->
-<!--        }-->
-
-<!--        .video-container {-->
-<!--            flex: 2; /* Takes up more space */-->
-<!--            background-color: #333;-->
-<!--            border-radius: 8px;-->
-<!--            overflow: hidden;-->
-<!--            position: relative;-->
-<!--            padding-bottom: calc(100% * 9 / 16); /* 16:9 Aspect Ratio placeholder */-->
-<!--        }-->
-
-<!--        .video-player {-->
-<!--            position: absolute;-->
-<!--            top: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 100%;-->
-<!--            display: flex;-->
-<!--            justify-content: center;-->
-<!--            align-items: center;-->
-<!--            color: white;-->
-<!--            font-size: 3em;-->
-<!--            background-color: #333;-->
-<!--        }-->
-
-<!--        /* Play button icon placeholder */-->
-<!--        .video-player::after {-->
-<!--            content: '▶';-->
-<!--            opacity: 0.8;-->
-<!--            padding: 20px;-->
-<!--            border-radius: 50%;-->
-<!--            background-color: rgba(255, 255, 255, 0.2);-->
-<!--        }-->
-
-<!--        .progress-bar {-->
-<!--            position: absolute;-->
-<!--            bottom: 0;-->
-<!--            left: 0;-->
-<!--            width: 100%;-->
-<!--            height: 6px;-->
-<!--            background-color: rgba(255, 255, 255, 0.3);-->
-<!--        }-->
-
-<!--        .progress-indicator {-->
-<!--            width: 15%; /* Placeholder for progress */-->
-<!--            height: 100%;-->
-<!--            background-color: white;-->
-<!--        }-->
-
-<!--        .code-container {-->
-<!--            flex: 1; /* Takes up less space */-->
-<!--            background-color: #f9f9f9;-->
-<!--            border: 1px solid #ddd;-->
-<!--            border-radius: 8px;-->
-<!--            padding: 15px;-->
-<!--            height: auto; /* Adjust based on video height */-->
-<!--            max-height: 450px; /* Example max height to show scroll */-->
-<!--            overflow-y: scroll;-->
-<!--            position: relative;-->
-<!--            white-space: pre-wrap;-->
-<!--            box-sizing: border-box;-->
-<!--            line-height: 1.4;-->
-<!--            font-size: 0.9em;-->
-<!--        }-->
-
-<!--        /* Scrollbar visual hint from the image */-->
-<!--        .code-container::after {-->
-<!--            content: '';-->
-<!--            position: absolute;-->
-<!--            right: 2px;-->
-<!--            top: 5px;-->
-<!--            width: 5px;-->
-<!--            height: 90%;-->
-<!--            background-color: #eee;-->
-<!--            border-radius: 3px;-->
-<!--        }-->
-
-<!--        .code-container::-webkit-scrollbar {-->
-<!--            width: 0px; /* Hide default scrollbar */-->
-<!--            background: transparent;-->
-<!--        }-->
-
-<!--        /* The actual code block styling */-->
-<!--        .python-code {-->
-<!--            color: #333;-->
-<!--        }-->
-
-<!--        .keyword { color: #0077aa; font-weight: bold; }-->
-<!--        .string { color: #aa5500; }-->
-<!--        .function { color: #00aa00; }-->
-<!--        .comment { color: #888; }-->
-<!--        .variable { color: #333; }-->
-
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--    <div class="container">-->
-<!--        <div class="header">-->
-<!--            <div class="title">Coding for fun - Grabbing code for python</div>-->
-<!--            <div class="buttons">-->
-<!--                <div class="button green"></div>-->
-<!--                <div class="button red"></div>-->
-<!--                <div class="button blue"></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="content-area">-->
-<!--            <div class="video-container">-->
-<!--                <div class="video-player">-->
-<!--                    </div>-->
-<!--                <div class="progress-bar">-->
-<!--                    <div class="progress-indicator"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="code-container">-->
-<!--<pre class="python-code">-->
-<!--<span class="function">def __init__</span>(<span class="keyword">self</span>, video: Path | str):-->
-<!--    <span class="keyword">self</span>.capture = \-->
-<!--        cv2.VideoCapture(video)-->
-
-<!--    <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">self</span>.capture.isOpened():-->
-<!--        <span class="keyword">raise</span> <span class="keyword">ValueError</span>(f<span class="string">'Cannot open (video)</span>-->
-<!--        <span class="string">\n came out as </span>{<span class="keyword">self</span>.capture}<span class="string">')</span>-->
-
-<!--    <span class="keyword">self</span>.fps = <span class="keyword">self</span>.capture.get \-->
-<!--        (cv2.CAP_PROP_FPS)-->
-
-<!--    <span class="keyword">self</span>.frame_count = \-->
-<!--        int(<span class="keyword">self</span>.capture.get \-->
-<!--        (cv2.CAP_PROP_FRAME_COUNT))-->
-
-<!--    <span class="keyword">self</span>.duration = <span class="keyword">self</span>.frame_count / <span class="keyword">self</span>.fps-->
-<!--</pre>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--</body>-->
-<!--</html>-->
-
-<!--&lt;!&ndash; Link to gemini convo https://gemini.google.com/share/60cc466e321e &ndash;&gt;-->
+</div>

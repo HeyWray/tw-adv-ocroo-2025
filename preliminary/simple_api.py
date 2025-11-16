@@ -97,3 +97,12 @@ def video_frame_ocr(vid: str, t: int):
     image = coding_vid.save_as_image(t, VIDEOS[vid])
     return {coding_vid.get_text_of_image(image)
             .replace("\n", " \n ")}
+
+@app.get("/video_file_response/{vid}", summary="Serves video with File Response", tags=["Video serve"])
+async def video_file_response(vid):
+    """
+    Returns video with File Response.
+    Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
+    """
+    path = VIDEOS.get[vid]
+    return FileResponse(path)
