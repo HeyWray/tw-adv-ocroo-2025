@@ -53,13 +53,18 @@ Install for Mac/Linux
 8. If you are using windows please return back to the Tesseract download.
 
 
-## Running FastAPI
+## Back End: Running FastAPI
 > uv run fastapi dev preliminary/simple_api.py 
 
 You can now open https://127.0.0.1:8000/docs for a list of methods to use
 
 The first method /test provides a starting point
 
+
+## Front End: Running Streamlit
+> streamlit run main.py
+
+You can now open http://localhost:8501 for the front end
 
 ## How to Use
 You can either go into https://127.0.0.1:8000/docs or type in your CLI.

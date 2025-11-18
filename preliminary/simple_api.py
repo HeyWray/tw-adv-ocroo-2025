@@ -31,7 +31,7 @@ class VideoMetaData(BaseModel):
 
 @app.get("/")
 def home():
-    return FileResponse("pages/home.html")
+    return FileResponse("pages/main.py")
 
 @app.get("/video")
 def list_videos():
@@ -99,10 +99,19 @@ def video_frame_ocr(vid: str, t: int):
             .replace("\n", " \n ")}
 
 @app.get("/video_file_response/{vid}", summary="Serves video with File Response", tags=["Video serve"])
-async def video_file_response(vid):
+async def video_file_response(vid: str):
     """
     Returns video with File Response.
     Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
     """
-    path = VIDEOS.get[vid]
-    return FileResponse(path)
+
+    e = _open_vid_or_404(vid)
+    if (e is HTTPException):
+        return print("Could not find the video")
+
+    path = "/resources/oop.mp4"
+
+    print(f"\n\n\n\n HERE {vid} & {path} \n\n\n\n")
+    print(FileResponse(path, media_type='video/mp4'))
+
+    return FileResponse(path, media_type='video/mp4')
