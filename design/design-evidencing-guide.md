@@ -59,9 +59,9 @@ You will validate your design by meeting with a user representative: the product
 
 ##### Meeting minutes
 
-- [ ] Meeting held on [date]
-- [ ] Persona discussed: [persona name]
-- [ ] Design artefacts reviewed: [list of artifacts]
+- [ ] Meeting held on [18/11/2025]
+- [ ] Persona discussed: [Katie]
+- [ ] Design artefacts reviewed: [Wireframe]
 - [ ] Issues discussed: [list of issues]
 - [ ] Feedback provided: [feedback]
 
@@ -69,13 +69,23 @@ You will validate your design by meeting with a user representative: the product
 
 - [ ] [list of things that worked well]
 
+- appears simple and user efficient
+- user friendly get text option (don't have to input a specific time, just have to hit a button and it will get whatever the video is paused on)
+
 ##### What could be improved
 
 - [ ] [list of things that could be improved]
 
+- reorder the buttons (home would get in the way between me tabbing to go video, get text, look at text)
+- worry about textbox and scroll, what if there is so much text that it gets cut off by the textarea and their screen reader only reads what is visible.
+
 ##### What will you change before the next meeting
 
 - [ ] [list of things that will be changed before the next meeting] (no commitment to complete this)
+
+- update persona with new aspperation
+- add in design solutions to problems (to fullfil 'Issues discussed')
+- discuss design and feedback with team
 
 ##### Were there any questions that needed to be discussed with the user
 
@@ -83,10 +93,10 @@ You will validate your design by meeting with a user representative: the product
 
 #### Lecturer's checklist (to be used by the lecturer)
 
-- [ ] Persona is well defined
-- [ ] Persona is relevant to the application
-- [ ] Design artifacts are present and easy to follow
-- [ ] Design decisions are based on user needs and goals
-- [ ] Appropriate considerations of interaction patterns appropriate for the user
-- [ ] Efforts towards realizing at least one significant issue involving user interaction
-- [ ] Whole team engagement in the design process
+- [-] Persona is well defined
+- [x] Persona is relevant to the application
+- [x] Design artifacts are present and easy to follow
+- [x] Design decisions are based on user needs and goals
+- [x] Appropriate considerations of interaction patterns appropriate for the user
+- [n/a] Efforts towards realizing at least one significant issue involving user interaction
+- [-] Whole team engagement in the design process
