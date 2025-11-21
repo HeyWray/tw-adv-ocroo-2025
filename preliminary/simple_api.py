@@ -4,6 +4,7 @@ Drive the API to complete "interprocess communication"
 
 Requirements
 """
+from idlelib.debugger_r import DictProxy
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Response
@@ -12,9 +13,7 @@ from pydantic import BaseModel
 from pathlib import Path
 from library_basics import CodingVideo
 
-
 app = FastAPI()
-
 
 # We'll create a lightweight "database" for our videos
 # You can add uploads later (not required for assessment)
@@ -23,15 +22,18 @@ VIDEOS: dict[str, Path] = {
     "demo": Path("./resources/oop.mp4")
 }
 
+
 class VideoMetaData(BaseModel):
     fps: float
     frame_count: int
     duration_seconds: float
     _links: dict | None = None
 
+
 @app.get("/")
 def home():
     return FileResponse("pages/main.py")
+
 
 @app.get("/video")
 def list_videos():
@@ -41,7 +43,7 @@ def list_videos():
         "videos": [
             {
                 "id": vid,
-                "path": str(path), # Not standard for debug only
+                "path": str(path),  # Not standard for debug only
                 "_links": {
                     "self": f"/video/{vid}",
                     "frame_example": f"/video/{vid}/frame/1.0"
@@ -50,6 +52,7 @@ def list_videos():
             for vid, path in VIDEOS.items()
         ]
     }
+
 
 def _open_vid_or_404(vid: str) -> CodingVideo:
     path = VIDEOS.get(vid)
@@ -60,24 +63,28 @@ def _open_vid_or_404(vid: str) -> CodingVideo:
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Could not open video {e}")
 
+
 def _meta(video: CodingVideo) -> VideoMetaData:
     return VideoMetaData(
-            fps=video.fps,
-            frame_count=video.frame_count,
-            duration_seconds=video.duration
+        fps=video.fps,
+        frame_count=video.frame_count,
+        duration_seconds=video.duration
     )
 
 
 @app.get("/video/{vid}", response_model=VideoMetaData)
-def video(vid: str):
+def video_info(vid: str):
+    """
+    returns video information e.g. how long the video is
+    """
     video = _open_vid_or_404(vid)
     try:
-            meta = _meta(video)
-            meta._links = {
-                "self": f"/video/{vid}",
-                "frames": f"/video/{vid}/frame/{{seconds}}"
-            }
-            return meta
+        meta = _meta(video)
+        meta._links = {
+            "self": f"/video/{vid}",
+            "frames": f"/video/{vid}/frame/{{seconds}}"
+        }
+        return meta
     finally:
         video.capture.release()
 
@@ -88,7 +95,7 @@ def video_frame(vid: str, t: float):
         video = _open_vid_or_404(vid)
         return Response(content=video.get_image_as_bytes(t), media_type="image/png")
     finally:
-      video.capture.release()
+        video.capture.release()
 
 
 @app.get("/video/{vid}/frame/{t}/ocr")
@@ -98,8 +105,9 @@ def video_frame_ocr(vid: str, t: int):
     return {coding_vid.get_text_of_image(image)
             .replace("\n", " \n ")}
 
-@app.get("/video_file_response/{vid}", summary="Serves video with File Response", tags=["Video serve"])
-async def video_file_response(vid: str):
+
+@app.get("/video/path/{vid}", summary="Serves video with File Response", tags=["Video serve"])
+async def video_path(vid: str) -> Path|None:
     """
     Returns video with File Response.
     Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
@@ -109,9 +117,6 @@ async def video_file_response(vid: str):
     if (e is HTTPException):
         return print("Could not find the video")
 
-    path = "/resources/oop.mp4"
+    path = VIDEOS.get(vid)
 
-    print(f"\n\n\n\n HERE {vid} & {path} \n\n\n\n")
-    print(FileResponse(path, media_type='video/mp4'))
-
-    return FileResponse(path, media_type='video/mp4')
+    return path

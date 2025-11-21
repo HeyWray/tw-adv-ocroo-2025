@@ -12,3 +12,6 @@ wheels/
 #Video
 resources/*
 resources/oop.mp4
+
+#Misc
+.idea/material_theme_project_new.xml

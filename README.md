@@ -66,6 +66,8 @@ The first method /test provides a starting point
 
 You can now open http://localhost:8501 for the front end
 
+For Streamlit documentation https://docs.streamlit.io/ 
+
 ## How to Use
 You can either go into https://127.0.0.1:8000/docs or type in your CLI.
 
