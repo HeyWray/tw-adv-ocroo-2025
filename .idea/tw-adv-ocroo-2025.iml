@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/preliminary" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.13 virtualenv at C:\Users\t6ofd\Desktop\TAFE\Code\AdvancedPrograming\ocroo\.venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
