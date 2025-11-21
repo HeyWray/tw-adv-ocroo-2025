@@ -29,7 +29,7 @@ class CodingVideo:
 
     def __init__(self, video: Path | str):
         self.capture = cv2.VideoCapture(video)
-        print(video)
+        #print(video)
         if not self.capture.isOpened():
             raise ValueError(f"Cannot open {video}\n came out as {self.capture}")
 

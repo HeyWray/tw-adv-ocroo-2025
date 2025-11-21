@@ -62,7 +62,7 @@ The first method /test provides a starting point
 
 
 ## Front End: Running Streamlit
-> streamlit run main.py
+> uv run streamlit run main.py
 
 You can now open http://localhost:8501 for the front end
 

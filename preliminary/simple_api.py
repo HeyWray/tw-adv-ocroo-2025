@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from pathlib import Path
 from library_basics import CodingVideo
+import cv2
 
 app = FastAPI()
 
@@ -106,10 +107,10 @@ def video_frame_ocr(vid: str, t: int):
             .replace("\n", " \n ")}
 
 
-@app.get("/video/path/{vid}", summary="Serves video with File Response", tags=["Video serve"])
-async def video_path(vid: str) -> Path|None:
+@app.get("/video/path/{vid}")
+def video_path(vid: str) -> Path|None:
     """
-    Returns video with File Response.
+    Returns video file Path or None.
     Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
     """
 
@@ -118,5 +119,36 @@ async def video_path(vid: str) -> Path|None:
         return print("Could not find the video")
 
     path = VIDEOS.get(vid)
-
     return path
+
+@app.get("/video/playback/{vid}")
+async def video_playback(vid: str) -> Path|None:
+    """
+    Returns video file Path or None.
+    Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
+    """
+
+    video = video_path(vid)
+    if video is None:
+        return None
+
+    cap = cv2.VideoCapture(video)
+    while (cap.isOpened()):
+
+        ret, frame = cap.read()
+        # cv2.namedWindow("window", cv2.WND_PROP_FULLSCREEN)
+        # cv2.setWindowProperty("window",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+
+        if ret:
+            cv2.imshow("Image", frame)
+        else:
+            print('no video')
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            break
+        print("here")
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+    return None
