@@ -44,8 +44,15 @@ def video_player(vid: str):
         #print(f"\nResult is:\n{playback}")
     with col2:
         #Grab text button & text output
-        clicked = st.button("Get Text", width="stretch", on_click=session_write)
+        #clicked = st.button("Get Text", width="stretch", on_click=session_write)
+        time = st.text_input("Input time you want to get",placeholder="In seconds e.g. 128", width="stretch", max_chars=6)
+        if time.isnumeric():
+            time = int(time)
+            video_text = fetch(session, f"video/{vid}/frame/{time}/ocr")
+
         with st.container(border=True, height="stretch"):
+            if video_text == {}:
+                video_text = "No text available"
             st.write(video_text)
 
 

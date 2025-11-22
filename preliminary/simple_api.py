@@ -139,15 +139,15 @@ async def video_playback(vid: str) -> Path|None:
         # cv2.namedWindow("window", cv2.WND_PROP_FULLSCREEN)
         # cv2.setWindowProperty("window",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
 
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
         if ret:
             cv2.imshow("Image", frame)
         else:
             print('no video')
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            break
-        print("here")
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+            continue
+
 
     cap.release()
     cv2.destroyAllWindows()
