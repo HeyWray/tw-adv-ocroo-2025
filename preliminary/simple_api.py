@@ -4,8 +4,9 @@ Drive the API to complete "interprocess communication"
 
 Requirements
 """
-from idlelib.debugger_r import DictProxy
 
+import sys
+sys.path.insert(0, "../resources")
 from fastapi import FastAPI, HTTPException
 from fastapi import Response
 from fastapi.responses import FileResponse
@@ -16,13 +17,14 @@ import cv2
 
 app = FastAPI()
 
-# We'll create a lightweight "database" for our videos
-# You can add uploads later (not required for assessment)
-# For now, we will just hardcode are samples
-VIDEOS: dict[str, Path] = {
-    "demo": Path("./resources/oop.mp4")
-}
 
+VIDEOS = {
+    "Classes" : {
+        'id' : "Classes",
+        'path' : Path("resources/oop.mp4"),
+        'description' : "A fundamental look at the basics of classes"
+    },
+}
 
 class VideoMetaData(BaseModel):
     fps: float
@@ -38,25 +40,30 @@ def home():
 
 @app.get("/video")
 def list_videos():
-    """List all available videos with HATEOAS-style links."""
+    """
+    List all available videos with HATEOAS-style links.
+    returns dict
+    """
     return {
         "count": len(VIDEOS),
         "videos": [
             {
-                "id": vid,
-                "path": str(path),  # Not standard for debug only
+                "id": VIDEOS.get(vid).get('id'),
+                "path": str(VIDEOS.get(vid).get('path')),  # Not standard for debug only
                 "_links": {
                     "self": f"/video/{vid}",
                     "frame_example": f"/video/{vid}/frame/1.0"
-                }
+                },
+                "description": VIDEOS.get(vid).get('description')
             }
-            for vid, path in VIDEOS.items()
+            for vid in VIDEOS
         ]
     }
 
 
 def _open_vid_or_404(vid: str) -> CodingVideo:
-    path = VIDEOS.get(vid)
+    path = VIDEOS.get(vid).get('path')
+
     if not path or not path.is_file():
         raise HTTPException(status_code=404, detail="Video not found")
     try:
@@ -93,16 +100,16 @@ def video_info(vid: str):
 @app.get("/video/{vid}/frame/{t}", response_class=Response)
 def video_frame(vid: str, t: float):
     try:
-        video = _open_vid_or_404(vid)
-        return Response(content=video.get_image_as_bytes(t), media_type="image/png")
+        video_or_404 = _open_vid_or_404(vid)
+        return Response(content=video_or_404.get_image_as_bytes(t), media_type="image/png")
     finally:
-        video.capture.release()
+        video_or_404.capture.release()
 
 
 @app.get("/video/{vid}/frame/{t}/ocr")
 def video_frame_ocr(vid: str, t: int):
-    coding_vid = CodingVideo(VIDEOS[vid])
-    image = coding_vid.save_as_image(t, VIDEOS[vid])
+    coding_vid = CodingVideo(VIDEOS.get(vid).get('path'))
+    image = coding_vid.save_as_image(t, VIDEOS.get(vid).get('path'))
     return {coding_vid.get_text_of_image(image)
             .replace("\n", " \n ")}
 
@@ -113,12 +120,11 @@ def video_path(vid: str) -> Path|None:
     Returns video file Path or None.
     Source: https://geekpython.in/stream-video-to-frontend-in-fastapi
     """
-
     e = _open_vid_or_404(vid)
     if (e is HTTPException):
         return print("Could not find the video")
 
-    path = VIDEOS.get(vid)
+    path = VIDEOS.get(vid).get('path')
     return path
 
 @app.get("/video/playback/{vid}")
