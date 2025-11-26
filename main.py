@@ -73,9 +73,9 @@ def video_player(vid: str):
 
     with col2:
         #Grab text button & text output
-
         time = st.text_input("Input time you want to get",placeholder="In seconds e.g. 128", width="stretch", max_chars=6, on_change=set_video_text, args={})
         if time.isnumeric():
+            #set the time only if it is a number
             time = int(time)
             if time < 0:
                 time = 0

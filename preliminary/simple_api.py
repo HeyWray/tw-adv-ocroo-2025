@@ -4,7 +4,7 @@ Drive the API to complete "interprocess communication"
 
 Requirements
 """
-
+import os
 import sys
 sys.path.insert(0, "../resources")
 from fastapi import FastAPI, HTTPException
@@ -108,10 +108,19 @@ def video_frame(vid: str, t: float):
 
 @app.get("/video/{vid}/frame/{t}/ocr")
 def video_frame_ocr(vid: str, t: int):
+    #encode the video
     coding_vid = CodingVideo(VIDEOS.get(vid).get('path'))
+
+    #create an image from the extracted video
     image = coding_vid.save_as_image(t, VIDEOS.get(vid).get('path'))
-    return {coding_vid.get_text_of_image(image)
+
+    #get the text from the image
+    text = {coding_vid.get_text_of_image(image.get('image'))
             .replace("\n", " \n ")}
+
+    #delete the image
+    os.remove(image.get('path'))
+    return text
 
 
 @app.get("/video/path/{vid}")
@@ -142,8 +151,6 @@ async def video_playback(vid: str) -> Path|None:
     while (cap.isOpened()):
 
         ret, frame = cap.read()
-        # cv2.namedWindow("window", cv2.WND_PROP_FULLSCREEN)
-        # cv2.setWindowProperty("window",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -153,7 +160,6 @@ async def video_playback(vid: str) -> Path|None:
             print('no video')
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
             continue
-
 
     cap.release()
     cv2.destroyAllWindows()

@@ -79,7 +79,7 @@ class CodingVideo:
             raise ValueError("Failed to encode frame")
         return buf.tobytes()
 
-    def save_as_image(self, seconds: int, output_path: Path | str = 'output') -> Image:
+    def save_as_image(self, seconds: int, output_path: Path | str = 'output') -> dict:
         """Saves the given frame as a png image"""
         saveas : Path
         output_path = str(output_path)
@@ -98,7 +98,11 @@ class CodingVideo:
             saveas = OUT_PATH / Path(output_path + str(duplicate) + ".png")
 
         image.save(saveas)
-        return image
+
+        return {
+            'image' : image,
+            'path' : str(saveas)
+        }
 
     def get_text_of_image(self, image: Image) -> str:
         """Currently not working"""
@@ -111,8 +115,8 @@ def _test():
     oop = CodingVideo(VID_PATH)
     print(oop)
     image = oop.save_as_image(42)
-    #oop.get_text_of_image(image)
-    print(oop.get_text_of_image(image))
+    #oop.get_text_of_image(image.get('image'))
+    print(oop.get_text_of_image(image.get('image')))
 
 if __name__ == '__main__':
     _test()
