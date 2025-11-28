@@ -115,7 +115,6 @@ def _test():
     oop = CodingVideo(VID_PATH)
     print(oop)
     image = oop.save_as_image(42)
-    #oop.get_text_of_image(image.get('image'))
     print(oop.get_text_of_image(image.get('image')))
 
 if __name__ == '__main__':

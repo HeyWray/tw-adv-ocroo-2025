@@ -59,11 +59,11 @@ You will validate your design by meeting with a user representative: the product
 
 ##### Meeting minutes
 
-- [ ] Meeting held on [18/11/2025]
-- [ ] Persona discussed: [Katie]
-- [ ] Design artefacts reviewed: [Wireframe]
-- [ ] Issues discussed: [list of issues]
-- [ ] Feedback provided: [feedback]
+- [x] Meeting held on [18/11/2025]
+- [x] Persona discussed: [Katie]
+- [x] Design artefacts reviewed: [Wireframe]
+- [x] Issues discussed: [list of issues]
+- [x] Feedback provided: [feedback]
 
 ##### What worked well
 
@@ -83,8 +83,8 @@ You will validate your design by meeting with a user representative: the product
 
 - [ ] [list of things that will be changed before the next meeting] (no commitment to complete this)
 
-- update persona with new aspperation
-- add in design solutions to problems (to fullfil 'Issues discussed')
+- update persona with new aspiration
+- add in design solutions to problems (to fulfill 'Issues discussed')
 - discuss design and feedback with team
 
 ##### Were there any questions that needed to be discussed with the user
