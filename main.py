@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import pyperclip as clip
 
 
 #Streamlit docs
@@ -9,6 +10,9 @@ import requests
 if 'show_gallery' not in st.session_state:
     st.session_state["show_gallery"] = True
 
+#copy to clipboard (customisation button)
+if 'copy_text' not in st.session_state:
+    st.session_state["copy_text"] = False
 
 #Pages
 def gallery():
@@ -26,21 +30,26 @@ def gallery():
     cols = [col1, col2, col3]
     next_col = 0
 
+    #get a list of videos
     videos = fetch(session, '/video')
 
-    counter = 1
-    for vid in videos['videos'] * 10:
+    #counter = 1 #debugging variable for testing duplicate videos
+    #create a series of buttons in columns for each video
+    for vid in videos['videos']:
         with cols[next_col]:
             #create a button with the video title, description,
             #and then on clicking it will pass the video path
             #to video_player()
-            st.button(f"{vid.get('id')} - {counter}\n\n{vid.get('description')}",
+            st.button(f"{vid.get('id')}\n\n{vid.get('description')}",
                       width="stretch", on_click=set_video, args={vid.get('id')})
+            #debug testing
+            # st.button(f"{vid.get('id')} - {counter}\n\n{vid.get('description')}",
+            #           width="stretch", on_click=set_video, args={vid.get('id')})
 
+            #controls which video
             next_col += 1
-            if next_col == 3:
-                next_col = 0
-            counter += 1
+            if next_col == 3: next_col = 0
+            #counter += 1
 
 def video_player(vid: str):
     """
@@ -56,7 +65,7 @@ def video_player(vid: str):
     video_path = fetch(session, f"video/path/{vid}")
 
     if 'video_text' not in st.session_state:
-        st.session_state["video_text"] = "Lorem ipsum" * 100
+        st.session_state["video_text"] = ""
 
     #Split the page into 2
     col1, col2 = st.columns([1,1], )
@@ -72,21 +81,38 @@ def video_player(vid: str):
         st.video(video_path)
 
     with col2:
-        #Grab text button & text output
-        time = st.text_input("Input time you want to get",placeholder="In seconds e.g. 128", width="stretch", max_chars=6, on_change=set_video_text, args={})
-        if time.isnumeric():
-            #set the time only if it is a number
-            time = int(time)
-            if time < 0:
-                time = 0
-            st.session_state["video_text"] = fetch(session, f"video/{vid}/frame/{time}/ocr")
+        txtcol1, txtcol2 = st.columns([1,1])
+
+        #Input time to get text
+        with txtcol1:
+            #Grab text button & text output
+            time = st.text_input("Input time you want to get",placeholder="In seconds e.g. 128", width="stretch", max_chars=6, on_change=set_video_text, args={})
+
+            #validate
+            if time.isnumeric():
+                #remove any float
+                time = int(time)
+                #remove negatives
+                if time < 0 : time = 0
+                #set text
+                st.session_state["video_text"] = fetch(session, f"video/{vid}/frame/{time}/ocr")
+                #copy to clipboard if set up
+                if st.session_state["copy_text"]:
+                    clip.copy(st.session_state["video_text"])
+
+        #Customisation, automatically copy text to clipboard
+        with txtcol2:
+            if st.checkbox("Automatically copy text to clipboard", width="stretch"):
+                st.session_state["copy_text"] = True
+            else:
+                st.session_state["copy_text"] = False
 
         with st.container(border=True, height="stretch"):
             if st.session_state["video_text"] == {}:
                 st.session_state["video_text"] = "No text available"
             st.write(st.session_state["video_text"])
 
-
+ 
 #session setting
 def set_gallery(state: bool):
     """Sets the gallery state to switch back and forth between video player and gallery"""
