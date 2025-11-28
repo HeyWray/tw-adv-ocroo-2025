@@ -14,9 +14,6 @@ if 'show_gallery' not in st.session_state:
 if 'copy_text' not in st.session_state:
     st.session_state["copy_text"] = False
 
-if 'validated' not in st.session_state:
-    st.session_state["validated"] = False
-
 #Pages
 def gallery():
     """

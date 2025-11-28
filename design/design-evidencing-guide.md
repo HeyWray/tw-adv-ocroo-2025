@@ -86,6 +86,7 @@ You will validate your design by meeting with a user representative: the product
 - update persona with new aspiration
 - add in design solutions to problems (to fulfill 'Issues discussed')
 - discuss design and feedback with team
+- increase size of text box area. allow for copying text to clipboard
 
 ##### Were there any questions that needed to be discussed with the user
 
