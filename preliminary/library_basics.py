@@ -19,8 +19,8 @@ import numpy as np
 import pytesseract
 import os
 
-VID_PATH = Path("./resources/oop.mp4")
-OUT_PATH = Path("./resources")
+VID_PATH = Path("../resources/oop.mp4")
+OUT_PATH = Path("../resources")
 tesseract_cmd_path_mac = "/opt/homebrew/Cellar/tesseract/5.5.1/bin/tesseract"
 tesseract_cmd_path_win = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
 
