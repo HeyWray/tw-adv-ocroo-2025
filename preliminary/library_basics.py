@@ -42,6 +42,9 @@ class CodingVideo:
             raise ValueError(f"Invalid fps value: {self.fps} for video")
 
         self.frame_count = int(self.capture.get(cv2.CAP_PROP_FRAME_COUNT))
+        if self.frame_count <= 0:
+            raise ValueError(f"Invalid frame count {self.frame_count}  for video")
+
         self.duration = self.frame_count / self.fps
 
     def __str__(self) -> str:
