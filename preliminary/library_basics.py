@@ -28,16 +28,19 @@ class CodingVideo:
     capture: cv2.VideoCapture
 
     def __init__(self, video: Path | str):
-        self.capture = cv2.VideoCapture(video)
-        #print(video)
         #check if the file exist
         if not video.exists():
             raise FileNotFoundError(f"Video {video} not found")
 
+        self.capture = cv2.VideoCapture(video)
+        # print(video)
         if not self.capture.isOpened():
             raise ValueError(f"Cannot open {video}\n came out as {self.capture}")
 
         self.fps = self.capture.get(cv2.CAP_PROP_FPS)
+        if self.fps is None or self.fps <= 0:
+            raise ValueError(f"Invalid fps value: {self.fps} for video")
+
         self.frame_count = int(self.capture.get(cv2.CAP_PROP_FRAME_COUNT))
         self.duration = self.frame_count / self.fps
 
