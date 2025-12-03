@@ -11,5 +11,10 @@ class TestCodingVideo(unittest.TestCase):
         self.assertGreater(video.fps, 0)
         self.assertGreater(video.frame_count, 0)
 
+    def test_file_not_found(self):
+        with self.assertRaises(FileNotFoundError):
+            CodingVideo(Path("../resources/nonexistent.mp4"))
+
+
 if __name__ == "__main__":
     unittest.main()
