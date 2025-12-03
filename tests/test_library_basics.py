@@ -6,7 +6,8 @@ import unittest
 
 class TestCodingVideo(unittest.TestCase):
     def test_valid_video(self):
-        video = CodingVideo(0)
+        VID_PATH = Path("../resources/oop.mp4")
+        video = CodingVideo(VID_PATH)
         self.assertGreater(video.fps, 0)
         self.assertGreater(video.frame_count, 0)
 
