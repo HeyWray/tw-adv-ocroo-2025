@@ -19,10 +19,20 @@ import numpy as np
 import pytesseract
 import os
 
-VID_PATH = Path("../resources/oop.mp4")
-OUT_PATH = Path("../resources")
+VID_PATH = Path("/resources/oop.mp4")
+OUT_PATH = Path("/resources")
+backend = "basepath"
 tesseract_cmd_path_mac = "/opt/homebrew/Cellar/tesseract/5.5.1/bin/tesseract"
 tesseract_cmd_path_win = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
+
+
+def path_checker(func):
+    def checker(VID_PATH):
+        abs_path = os.path.abspath(VID_PATH)
+        if not os.path.exists(abs_path):
+            raise FileNotFoundError(f"Video {VID_PATH} not found")
+        return func(abs_path)
+    return checker
 
 class CodingVideo:
     capture: cv2.VideoCapture
@@ -119,13 +129,3 @@ class CodingVideo:
         return pytesseract.image_to_string(image)
 
 
-
-def _test():
-    """Try out your class here"""
-    oop = CodingVideo(VID_PATH)
-    print(oop)
-    image = oop.save_as_image(42)
-    print(oop.get_text_of_image(image.get('image')))
-
-if __name__ == '__main__':
-    _test()
