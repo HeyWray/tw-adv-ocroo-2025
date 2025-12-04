@@ -19,20 +19,22 @@ import numpy as np
 import pytesseract
 import os
 
-VID_PATH = Path("/resources/oop.mp4")
-OUT_PATH = Path("/resources")
-backend = "basepath"
+VID_PATH = Path("../resources/oop.mp4")
+OUT_PATH = Path("../resources")
 tesseract_cmd_path_mac = "/opt/homebrew/Cellar/tesseract/5.5.1/bin/tesseract"
 tesseract_cmd_path_win = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
 
 
 def path_checker(func):
-    def checker(VID_PATH):
-        abs_path = os.path.abspath(VID_PATH)
+    def checker(path):
+        abs_path = os.path.abspath(path)
+        print(f"Checking absolute path: {abs_path}")
         if not os.path.exists(abs_path):
-            raise FileNotFoundError(f"Video {VID_PATH} not found")
+            raise FileNotFoundError(f"Video {abs_path} not found")
         return func(abs_path)
     return checker
+
+
 
 class CodingVideo:
     capture: cv2.VideoCapture
