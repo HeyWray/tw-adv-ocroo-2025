@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pyperclip as clip
 from git import refresh
+from preliminary.library_basics import CodingVideo
 
 #Streamlit docs
 #https://docs.streamlit.io/
@@ -51,6 +52,8 @@ def gallery():
             next_col += 1
             if next_col == 3: next_col = 0
             #counter += 1
+
+
 
 def video_player(vid: str):
     """

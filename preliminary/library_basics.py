@@ -19,22 +19,44 @@ import numpy as np
 import pytesseract
 import os
 
-VID_PATH = Path("./resources/oop.mp4")
-OUT_PATH = Path("./resources")
+VID_PATH = Path("../resources/oop.mp4")
+OUT_PATH = Path("../resources")
 tesseract_cmd_path_mac = "/opt/homebrew/Cellar/tesseract/5.5.1/bin/tesseract"
 tesseract_cmd_path_win = "C:/Users/wrayth/source/repos/Tesseract-OCR/tesseract.exe"
+
+
+def path_checker(func):
+    def checker(path):
+        abs_path = os.path.abspath(path)
+        print(f"Checking absolute path: {abs_path}")
+        if not os.path.exists(abs_path):
+            raise FileNotFoundError(f"Video {abs_path} not found")
+        return func(abs_path)
+    return checker
+
+
 
 class CodingVideo:
     capture: cv2.VideoCapture
 
     def __init__(self, video: Path | str):
+        #check if the file exist
+        if not video.exists():
+            raise FileNotFoundError(f"Video {video} not found")
+
         self.capture = cv2.VideoCapture(video)
-        #print(video)
+        # print(video)
         if not self.capture.isOpened():
             raise ValueError(f"Cannot open {video}\n came out as {self.capture}")
 
         self.fps = self.capture.get(cv2.CAP_PROP_FPS)
+        if self.fps is None or self.fps <= 0:
+            raise ValueError(f"Invalid fps value: {self.fps} for video")
+
         self.frame_count = int(self.capture.get(cv2.CAP_PROP_FRAME_COUNT))
+        if self.frame_count <= 0:
+            raise ValueError(f"Invalid frame count {self.frame_count}  for video")
+
         self.duration = self.frame_count / self.fps
 
     def __str__(self) -> str:
@@ -109,13 +131,3 @@ class CodingVideo:
         return pytesseract.image_to_string(image)
 
 
-
-def _test():
-    """Try out your class here"""
-    oop = CodingVideo(VID_PATH)
-    print(oop)
-    image = oop.save_as_image(42)
-    print(oop.get_text_of_image(image.get('image')))
-
-if __name__ == '__main__':
-    _test()
